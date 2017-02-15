@@ -1,0 +1,7 @@
+.navbar {
+  padding: 7px 0;
+}
+
+ul.navbar-nav > li {
+margin-right: 12px;
+}
