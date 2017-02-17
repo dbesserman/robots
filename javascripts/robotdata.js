@@ -1,90 +1,105 @@
 var catalog = [{
   "name": "Alayna",
   "id": 1,
+  "image_id": 1, 
   "serial": "f9647218-d439-4c96-b597-a1f99abfb1cd",
   "manufacturer": "China",
   "img": "images/1.png"
 }, {
   "name": "Alicia",
   "id": 2,
+  "image_id": 2, 
   "serial": "ec738f26-bdbb-4321-8a60-0403592981fd",
   "manufacturer": "USA",
   "img": "images/2.png"
 }, {
   "name": "Ara",
   "id": 3,
+  "image_id": 3, 
   "serial": "385beb93-aa38-434a-ae7e-1595c1b28ee1",
   "manufacturer": "Russia",
   "img": "images/3.png"
 }, {
   "name": "Billie",
   "id": 4,
+  "image_id": 4, 
   "serial": "Nintendo WiiU",
   "manufacturer": "USA",
   "img": "images/4.png"
 }, {
   "name": "Carey",
   "id": 5,
+  "image_id": 5, 
   "serial": "54ca553d-cd3c-4ad4-9047-2807640a0de0",
   "manufacturer": "Russia",
   "img": "images/5.png"
 }, {
   "name": "Demario",
   "id": 6,
+  "image_id": 6, 
   "serial": "51c9b97b-8a58-48c4-b67c-121a8f6c1c21",
   "manufacturer": "USA",
   "img": "images/6.png"
 }, {
   "name": "Cesar",
   "id": 7,
+  "image_id": 7, 
   "serial": "2fd85d23-0761-478d-ba0d-e17f169b026d",
   "manufacturer": "China",
   "img": "images/7.png"
 }, {
   "name": "Erna",
   "id": 8,
+  "image_id": 8, 
   "serial": "5f5d4fff-cee7-41e6-8a5b-783629b51c38",
   "manufacturer": "USA",
   "img": "images/8.png"
 }, {
   "name": "Gia",
   "id": 9,
+  "image_id": 9, 
   "serial": "b6eab3da-5ed6-456f-8b89-c175862e23d8",
   "manufacturer": "China",
   "img": "images/9.png"
 }, {
   "name": "Francesco",
   "id": 10,
+  "image_id": 10, 
   "serial": "594ecb71-f4e3-4bbf-8f84-6b2112690960",
   "manufacturer": "USA",
   "img": "images/10.png"
 }, {
   "name": "Hannah",
   "id": 11,
+  "image_id": 11, 
   "serial": "c33b6ce0-022c-4d29-af56-8f8f8970006a",
   "manufacturer": "Russia",
   "img": "images/11.png"
 }, {
   "name": "Genny",
   "id": 12,
+  "image_id": 12, 
   "serial": "b6eab3da-5ed6-456f-8b89-c175862e23d8",
   "manufacturer": "China",
   "img": "images/12.png"
 }, {
   "name": "Isaiah",
   "id": 13,
+  "image_id": 13, 
   "serial": "96666987-1888-42f8-8496-a23ac622a28e",
   "manufacturer": "USA",
   "img": "images/13.png"
 }, { 
   "name": "Jared",
   "id": 14,
+  "image_id": 14, 
   "serial": "ae3a2c6c-75f0-4659-81d4-65488ba17e26",
   "manufacturer": "China",
   "img": "images/14.png"
 }, {
   "name": "Johnpaul",
   "id": 15,
+  "image_id": 15, 
   "serial": "0c08ef26-c6d2-481d-8d04-81f4b94d5533",
   "manufacturer": "Russia",
   "img": "images/15.png"

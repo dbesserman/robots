@@ -5,3 +5,42 @@
 ul.navbar-nav > li {
 margin-right: 12px;
 }
+
+.panel-body {
+  text-align: center;
+}
+
+footer {
+  height: 100px;
+  background: #000;
+  margin-top: 80px;
+}
+
+/* main, */
+/* #form_navbar, */
+/* #form_navbar .navbar-right, */
+#add_form {
+  display: none;
+}
+
+
+
+/*  Forms  */
+
+form label {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+form  dt {
+  margin-top: 15px;
+}
+
+.invalid label,
+.invalid dd {
+  color: #b00b00;
+}
+
+.invalid input {
+  border-color: #b00b00;
+}

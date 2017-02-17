@@ -15,61 +15,255 @@
     <script src="javascripts/robots.js"></script>
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li>
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="pagination" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Per Page 5
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="#">5</a></li>
-                  <li><a href="#">10</a></li>
-                  <li><a href="#">20</a></li>
-                </ul>
-              </div>
-            </li>
+    <main>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li id="robots_per_page" >
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Per Page 5
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" class="pagination_select" >
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">10</a></li>
+                    <li><a href="#">20</a></li>
+                  </ul>
+                </div>
+              </li>
 
-            <li>
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Sort by +name
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="#">+name</a></li>
-                  <li><a href="#">-name</a></li>
-                </ul>
-              </div>
-            </li>
+              <li id="order">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Sort by +name
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">+name</a></li>
+                    <li><a href="#">-name</a></li>
+                  </ul>
+                </div>
+              </li>
 
-            <li>
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Filter by manufacturer = Any
-                  <span class="caret"></span>
+              <li id="filter">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Filter by manufacturer = Any
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  </ul>
+                </div>
+              </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <button class="btn btn-success add">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="#">Any</a></li>
-                  <li><a href="#">China</a></li>
-                  <li><a href="#">Russia</a></li>
-                  <li><a href="#">US</a></li>
-                </ul>
-              </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+
+      <div class="container">
+        <h1>Robots</h1>
+
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+          </ul>
+        </nav>
+
+        <div class="row" id="robots"></div>
+
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
             </li>
           </ul>
+        </nav>
+      </div>
+    </main>
 
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <button class="btn btn-success" id="add">+</button>
-            </li>
-          </ul>
+  <div class="container">
+    <div id="forms">
+    </div>
+  </div>
 
+  <footer class="footer"></footer>
+
+    <script id="manufacturers_template" type="text/x-handlebars-template">
+      {{#each manufacturers}}
+        {{>manufacturer}}
+      {{/each}}
+    </script>
+
+    <script id="manufacturer_template" type="text/x-handlebars-template">
+      <li><a href="#">{{this}}</a></li>
+    </script>
+
+    <script id="pages_template" type="text/x-handlebars-template">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      {{#each pages}}
+        {{>page}}
+      {{/each}}
+
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </script>
+
+    <script id="page_template" type="text/x-handlebars-template">
+      <li><a href="#">{{this}}</a></li>
+    </script>
+
+    <script id="robots_template" type="text/x-handlebars-template">
+      {{#each robots}}
+        {{>robot}} 
+      {{/each}}
+    </script>
+
+    <script id="robot_template" type="text/x-handlebars-template">
+      <div class="col-sm-6 col-md-3 robot">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{name}}</h3>
+          </div>
+          <div class="panel-body">
+            <img src="images/{{image_id}}.png" alt="{{name}} portrait"/>
+          </div>
+          <div class="panel-footer clearfix">
+            <div class="btn-group pull-right">
+              <button type="button" class="btn btn-primary show" data-robot-id="{{id}}">
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-warning edit" data-robot-id="{{id}}">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-danger delete" data-robot-id="{{id}}">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </nav>
+    </script>
+
+    <script id="show_template" type="text/x-handlebars-template">
+      {{>resource_nav}}
+
+      <div class="col-md-3">
+        <img src="images/{{image_id}}.png" />
+      </div>
+      <div class="col-md-9">
+        <h1>{{name}}</h1>
+        <dl>
+          <dt>Serial Number</dt>
+          <dd>{{serial}}</dd>
+          <dt>Manufacturer</dt>
+          <dd>{{manufacturer}}</dd>
+        </dl>
+      </div>
+    </script>
+
+    <script id="create_template" type="text/x-handlebars-template">
+      {{>resource_nav}}
+
+      <div class="col-xs-12 col-sm-9">
+        <form action="#" method="POST" id="create_form">
+          <h1>Add Robot</h1>
+          <dl>
+            <dt><label for="name">Name</label></dt>
+            <dd><input type="text" id="name" name="name" class="form-control" /></dd>
+          </dl>
+          <dl>
+            <dt><label for="manufacturer">Manufacturer</label></dt>
+            <dd><input type="text" id="manufacturer" name="manufacturer" class="form-control" /></dd>
+          </dl>
+          <div class="btn-group">
+            <input type="reset" class="btn btn-default" value="Reset" />
+            <input type="submit" class="btn btn-primary" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </script>
+
+    <script id="edit_template" type="text/x-handlebars-template">
+      {{>resource_nav}}
+
+      <div class="col-xs-12 col-sm-9">
+        <form action="#" method="POST" id="edit_form">
+          <h1>{{name}}</h1>
+          <dl>
+            <dt><label for="name">Name</label></dt>
+            <dd><input type="text" id="name" name="name" class="form-control" value="{{name}}" /></dd>
+          </dl>
+          <dl>
+            <dt><label for="manufacturer">Manufacturer</label></dt>
+            <dd><input type="text" id="manufacturer" name="manufacturer" class="form-control" value="{{manufacturer}}" /></dd>
+          </dl>
+          <input type='hidden' name="id" value="{{id}}" />
+          <div class="btn-group">
+            <input type="reset" class="btn btn-default" value="Reset" />
+            <input type="submit" class="btn btn-primary" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </script>
+
+    <script id="resource_nav" type="text/x-handlebars-template">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li>
+                  <button class="btn btn-default back">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    Back to list
+                  </button>
+                </li>
+              </ul>
+
+              {{#if id}}
+                <div class="btn-group navbar-right">
+                  <button type="button" class="btn btn-success add">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </button>
+                  <button type="button" class="btn btn-warning edit" data-robot-id="{{id}}">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                  </button>
+                  <button type="button" class="btn btn-danger delete" data-robot-id="{{id}}">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </button>
+              </div>
+              {{/if}}
+            </div>
+          </div>
+        </nav>
+    </script>
   </body>
 </html>
