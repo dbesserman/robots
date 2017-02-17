@@ -20,31 +20,6 @@ $(function() {
   Handlebars.registerPartial('resource_nav', $('#resource_nav').html());
   Handlebars.registerPartial('page', $('#page_template').html());
 
-
-  function getFormObject(e) {
-    var formObj = {};
-    var inputs = $(e.target).closest('form').serializeArray();
-
-    inputs.forEach(function(input) {
-      formObj[input['name']] = input['value'];
-    });
-
-    return formObj;
-  };
-
-  var hexChars = '0123456789abcdef'.split('');
-
-  function randomHex(length) {
-    var result = '';
-    for (var i = 0; i < length; i++) {
-      var idx = Math.floor(Math.random() * hexChars.length);
-
-      result += hexChars[idx];
-    }
-
-    return result;
-  };
-
   function Robot(name, manufacturer, id) {
     this.name = name;
     this.manufacturer = manufacturer;
@@ -80,16 +55,11 @@ $(function() {
 
       this.setupLayout();
     },
-    setManufacturerFilter: function(manufacturer) {
-      this.params.manufacturer = manufacturer;
-      this.persist();
+    setupLayout: function() {
+      this.displayPagination();
+      this.displayRobotsPerPage();
       this.displayManufacturerFilter();
-      this.resetPagination();
-    },
-    displayManufacturerFilter: function() {
-      var buttonText = $('#filter').find('button')[0].firstChild;
-
-      buttonText.nodeValue = 'Filter by manufacturer = ' + this.params.manufacturer + ' ';
+      this.displayPagination();
     },
     setOrder: function(order) {
       this.params.order = order;
@@ -108,20 +78,10 @@ $(function() {
       this.resetPagination();
       this.persist();
     },
-    resetPagination: function() {
-      this.params.page = 1;
-      this.displayPagination();
-    },
     displayRobotsPerPage: function() {
       var buttonText = $('#robots_per_page').find('button')[0].firstChild;
 
       buttonText.nodeValue = 'Per Page ' + this.params.per_page + ' ';
-    },
-    setupLayout: function() {
-      this.displayPagination();
-      this.displayRobotsPerPage();
-      this.displayManufacturerFilter();
-      this.displayPagination();
     },
     setPage: function(selection) {
       if (selection.charCodeAt(0) === 187) { /* >> */
@@ -143,6 +103,21 @@ $(function() {
         lis.filter('.active').removeClass('active');
         lis.eq(self.params.page).addClass('active');
       });
+    },
+    resetPagination: function() {
+      this.params.page = 1;
+      this.displayPagination();
+    },
+    setManufacturerFilter: function(manufacturer) {
+      this.params.manufacturer = manufacturer;
+      this.persist();
+      this.displayManufacturerFilter();
+      this.resetPagination();
+    },
+    displayManufacturerFilter: function() {
+      var buttonText = $('#filter').find('button')[0].firstChild;
+
+      buttonText.nodeValue = 'Filter by manufacturer = ' + this.params.manufacturer + ' ';
     },
     persist: function() {
       localStorage.setItem('display_params', JSON.stringify(this.params));
@@ -225,6 +200,18 @@ $(function() {
 
       return result;
     },
+    updatePagination: function(nbOfPages) {
+      var paginations = $('.pagination');
+      var pages = [];
+
+      for (var i = 1; i <= nbOfPages; i++) {
+        pages.push(i);
+      }
+
+      paginations.each(function() {
+        $(this).html(templates['pages']({ pages: pages }));
+      });
+    },
     getSelectedRobots: function(params) {
       var manufacturer = params.manufacturer;
       var page = params.page;
@@ -237,18 +224,6 @@ $(function() {
 
       this.updatePagination(nbOfPages);
       return selectedRobots;
-    },
-    updatePagination: function(nbOfPages) {
-      var paginations = $('.pagination');
-      var pages = [];
-
-      for (var i = 1; i <= nbOfPages; i++) {
-        pages.push(i);
-      }
-
-      paginations.each(function() {
-        $(this).html(templates['pages']({ pages: pages }));
-      });
     },
     getManufacturedBy: function(manufacturer) {
       if (manufacturer === 'Any') { 
@@ -353,25 +328,6 @@ $(function() {
         this.hideForm()
       }
     },
-    displayInvalidImputs: function(formObj) {
-      for (prop in formObj) {
-        var $input = $('#' + prop);
-        var $dl = $input.closest('dl');
-
-        if (formObj[prop] === '' && !$dl.hasClass('invalid')) { /* Invalid Input, Not displayed yet */
-          $dl.addClass('invalid'); 
-          $dl.append('<dd>"' + prop + '" is required</dd>')
-        } else if (formObj[prop] !== '' && $dl.hasClass('invalid')) { /* Former invalid, now valid */
-          $dl.removeClass('invalid');
-          $dl.find('dd + dd').remove();
-        }
-      }
-    },
-    anyInvalidInput: function(formObj) {
-      var values = Object.values(formObj);
-
-      return values.indexOf('') !== -1
-    },
     showRobot: function(e) {
       var id = $(e.target).closest('button').data('robot-id');
       var robot = this.robots.find(id);
@@ -420,6 +376,25 @@ $(function() {
       $robots.html(Handlebars.compile(templates['robots']({robots: robots})));
       this.displayParams.displayPagination();
     },
+    displayInvalidImputs: function(formObj) {
+      for (prop in formObj) {
+        var $input = $('#' + prop);
+        var $dl = $input.closest('dl');
+
+        if (formObj[prop] === '' && !$dl.hasClass('invalid')) { /* Invalid Input, Not displayed yet */
+          $dl.addClass('invalid'); 
+          $dl.append('<dd>"' + prop + '" is required</dd>')
+        } else if (formObj[prop] !== '' && $dl.hasClass('invalid')) { /* Former invalid, now valid */
+          $dl.removeClass('invalid');
+          $dl.find('dd + dd').remove();
+        }
+      }
+    },
+    anyInvalidInput: function(formObj) {
+      var values = Object.values(formObj);
+
+      return values.indexOf('') !== -1
+    },
     prepareForm: function(id) {
       $main.hide();
     },
@@ -434,6 +409,30 @@ $(function() {
       $ul.html(templates['manufacturers']({ manufacturers: self.robots.manufacturers() }));
     },
   }
+
+  function getFormObject(e) {
+    var formObj = {};
+    var inputs = $(e.target).closest('form').serializeArray();
+
+    inputs.forEach(function(input) {
+      formObj[input['name']] = input['value'];
+    });
+
+    return formObj;
+  };
+
+  var hexChars = '0123456789abcdef'.split('');
+
+  function randomHex(length) {
+    var result = '';
+    for (var i = 0; i < length; i++) {
+      var idx = Math.floor(Math.random() * hexChars.length);
+
+      result += hexChars[idx];
+    }
+
+    return result;
+  };
 
 
   robotsApp.init();
